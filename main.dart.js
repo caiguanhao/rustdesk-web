@@ -6820,6 +6820,7 @@ aY2(a){if(a instanceof A.dG)return a.j(0)
 return"Instance of '"+A.aih(a)+"'"},
 aY3(a,b){a=A.c(a)
 a.stack=b.j(0)
+return console.warn(a.message)
 throw a
 throw A.c("unreachable")},
 AI(a,b){var s
@@ -24288,7 +24289,7 @@ var $async$K7=A.I(function(a,b){if(a===1)return A.E(b,r)
 while(true)switch(s){case 0:if($.z==null)A.aI9()
 $.z.toString
 q=$.cj().AY()
-p=A.abi(A.aLT("AIzaSyCgehIZk1aFP0E7wZtYRRqrfvNiNAF39-A","1:768133699366:web:d50faf0792cb208d7993e7","rustdesk.firebaseapp.com","https://rustdesk.firebaseio.com","G-9PEH85N6ZQ","768133699366","rustdesk","rustdesk.appspot.com"))
+p=A.abi(A.aLT("","","","","","","",""))
 s=2
 return A.L(q,$async$K7)
 case 2:s=3
@@ -31010,7 +31011,7 @@ for(k=t.a,h=J.fd(j,k),g=A.l(h),h=new A.b8(h,h.gq(h),g.i("b8<X.E>")),f=t.j,g=g.i(
 if(e==null)e=g.a(e)
 d=J.ag(e)
 c=A.bH(d.h(e,"family"))
-for(e=J.aJ(f.a(d.h(e,"fonts")));e.A();)n.Oe(i,a3.Ct(A.bH(J.aW(k.a(e.gN(e)),"asset"))),c)}if(!n.a.v(0,"Roboto"))n.Oe(i,"https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Me5WZLCzYlKw.ttf","Roboto")
+for(e=J.aJ(f.a(d.h(e,"fonts")));e.A();)n.Oe(i,a3.Ct(A.bH(J.aW(k.a(e.gN(e)),"asset"))),c)}if(!n.a.v(0,"Roboto"))n.Oe(i,"/roboto.ttf","Roboto")
 a0=B.c
 a1=n.b
 a2=J
@@ -48678,7 +48679,7 @@ while(true)switch(s){case 0:if($.aC().h(0,"firebase")!=null){s=1
 break}o=p.gOx()
 n=p.gPu()
 s=3
-return A.L(p.tC("https://www.gstatic.com/firebasejs/"+o+"/firebase-app.js"),$async$tx)
+return A.L(p.tC("/libs/firebase-app.js"),$async$tx)
 case 3:m=$.aGO
 m=m.gaD(m)
 s=4
@@ -48691,7 +48692,7 @@ while(true)switch(s){case 0:j=$.aC()
 if(j.h(0,"firebase")!=null){s=1
 break}o=p.gOx()
 n=p.gPu()
-m="https://www.gstatic.com/firebasejs/"+o
+m="/libs/"
 l=t.N
 A.aMp(j.h(0,"require")).af("config",[A.aMq(A.ai(["paths",A.ai(["@firebase/app",m+"/firebase-app","@firebase/analytics",m+"/firebase-analytics","@firebase/app-check",m+"/firebase-app-check","@firebase/auth",m+"/firebase-auth","@firebase/firestore",m+"/firebase-firestore","@firebase/functions",m+"/firebase-functions","@firebase/messaging",m+"/firebase-messaging","@firebase/storage",m+"/firebase-storage","@firebase/database",m+"/firebase-database","@firebase/remote-config",m+"/firebase-remote-config","@firebase/performance",m+"/firebase-performance","@firebase/installations",m+"/firebase-installations"],l,l)],l,t.GU))])
 l=new A.af($.ar,t.LR)
@@ -48752,7 +48753,7 @@ $S:298}
 A.abd.prototype={
 $1(a){var s=a.a
 if(B.c.v(this.b,s))return A.dx(null,t.z)
-return this.a.tC("https://www.gstatic.com/firebasejs/"+this.c+"/firebase-"+s+".js")},
+return this.a.tC("/libs/firebase-"+s+".js")},
 $S:301}
 A.abb.prototype={
 $1(a){var s=a.a

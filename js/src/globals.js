@@ -4,7 +4,6 @@ import {loadVp9} from "./codec";
 import {checkIfRetry, version} from "./gen_js_from_hbb";
 import {initZstd, translate} from "./common";
 import PCMPlayer from "pcm-player";
-import {getServerConf} from "./ljw";
 
 window.myconsole = (...args) => {
     console.log(args);
@@ -261,9 +260,6 @@ window.setByName = (name, value) => {
         case 'option':
             value = JSON.parse(value);
             localStorage.setItem(value.name, value.value);
-            if (value.name === 'access_token' && value.value) {
-                getServerConf(value.value);
-            }
             break;
         case 'peer_option':
             value = JSON.parse(value);
@@ -309,9 +305,6 @@ function _getByName(name, arg) {
             return curConn.getOption(arg) || false;
         case 'option':
             const v = localStorage.getItem(arg);
-            if (arg === 'access_token' && v) {
-                getServerConf(v);
-            }
             return v;
         case 'image_quality':
             return curConn.getImageQuality();
