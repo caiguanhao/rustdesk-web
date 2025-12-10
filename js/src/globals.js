@@ -281,7 +281,122 @@ window.getByName = (name, arg) => {
     return JSON.stringify(v);
 }
 
+function triggerTap (element) {
+    if (!element) return;
+    const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+    if (isTouch) {
+        const rect = element.getBoundingClientRect();
+        const x = rect.left + (rect.width / 2);
+        const y = rect.top + (rect.height / 2);
+
+        const opts = {
+            bubbles: true, cancelable: true, view: window,
+            buttons: 1, pointerType: 'touch', isPrimary: true,
+            width: 1, height: 1, clientX: x, clientY: y, screenX: x, screenY: y
+        };
+
+        element.dispatchEvent(new PointerEvent('pointerdown', opts));
+        setTimeout(() => {
+            element.dispatchEvent(new PointerEvent('pointerup', opts));
+            element.dispatchEvent(new MouseEvent('click', opts));
+        }, 50);
+    } else {
+        element.click();
+    }
+}
+
+
+window.pressConnectButton = () => {
+    const flutterHost = document.querySelector('flt-glass-pane') || document.body;
+    const root = flutterHost.shadowRoot || flutterHost;
+    const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
+    console.log(`Mode: ${isTouch ? 'Touch (Simulated)' : 'Desktop (Click)'}`);
+
+    const wakeUp = () => {
+        if (isTouch) {
+            // Mobile: Tap the background glass pane
+            triggerTap(flutterHost);
+            // Mobile: Try hitting hidden submit input (shortcut)
+            const hiddenSubmit = root.querySelector('input.submitBtn');
+            if (hiddenSubmit) hiddenSubmit.click();
+        } else {
+            // Desktop: Click the semantics placeholder
+            const placeholder = root.querySelector('flt-semantics-placeholder');
+            if (placeholder) placeholder.click();
+        }
+    };
+
+    wakeUp();
+
+    let attempts = 0;
+    const interval = setInterval(() => {
+        attempts++;
+        const buttons = root.querySelectorAll('[role="button"]');
+
+        if (buttons.length > 0) {
+            clearInterval(interval);
+            console.log("Buttons found. Initiating click sequence.");
+
+            // Schedule clicks (Dry Run 300ms, Final 1000ms)
+            [300, 1000].forEach(delay => {
+                setTimeout(() => {
+                    if (window.started) return;
+                    // Re-query to get the latest DOM reference
+                    const freshButtons = root.querySelectorAll('[role="button"]');
+                    const targetBtn = freshButtons[freshButtons.length - 1];
+                    console.log(`Clicking target (Delay: ${delay}ms)`);
+                    triggerTap(targetBtn);
+                }, delay);
+            });
+
+        } else {
+            // Retry Logic
+            // On mobile, we keep tapping the screen every 0.5s to ensure semantics load
+            if (isTouch && attempts % 5 === 0) {
+                console.log("Retrying wake-up tap...");
+                wakeUp();
+            }
+
+            if (attempts > 60) { // 6 seconds timeout
+                clearInterval(interval);
+                console.log("Timeout: Flutter buttons never appeared.");
+            }
+        }
+    }, 100);
+
+    // var flutterHost = document.querySelector('flt-glass-pane');
+    // var root = flutterHost.shadowRoot;
+    // var placeholder = root.querySelector('flt-semantics-placeholder');
+    // if (placeholder) {
+    //     placeholder.click();
+    // }
+    // var attempts = 0;
+    // var interval = setInterval(() => {
+    //     attempts++;
+    //     var buttons = root.querySelectorAll('[role="button"]');
+    //     if (buttons.length > 0) {
+    //         clearInterval(interval);
+    //         setTimeout(() => {
+    //             if (window.started) return;
+    //             var finalButtons = root.querySelectorAll('[role="button"]');
+    //             var targetBtn = finalButtons[finalButtons.length - 1];
+    //             targetBtn.click();
+    //         }, 300);
+    //         setTimeout(() => {
+    //             if (window.started) return;
+    //             var finalButtons = root.querySelectorAll('[role="button"]');
+    //             var targetBtn = finalButtons[finalButtons.length - 1];
+    //             targetBtn.click();
+    //         }, 1000);
+    //     } else if (attempts > 30) {
+    //         clearInterval(interval);
+    //     }
+    // }, 100);
+}
+
 function getPeersForDart() {
+    return [] // do not show recent peers
     const peers = [];
     for (const [id, value] of Object.entries(getPeers())) {
         if (!id) continue;
@@ -346,6 +461,7 @@ window.init = async () => {
     });
     await initZstd();
     console.log('init done');
+    if (window.onInitDone) window.onInitDone();
 }
 
 export function getPeers() {

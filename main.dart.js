@@ -57571,7 +57571,7 @@ s=r.a
 s=s.ax
 A.i3(a,B.b_,t.R).toString
 r.a.toString
-return A.cq(q.f,!0,s,q.a,r.ga_9(),B.dV,null,"Show menu")}}
+return null/*A.cq(q.f,!0,s,q.a,r.ga_9(),B.dV,null,"Show menu")*/}}
 A.ai8.prototype={
 $1(a){var s=this.a
 if(s.c==null)return null
@@ -86969,7 +86969,7 @@ r=$.ne()
 q=A.aOi(n,B.jM,n,A.aOG())
 p=A.aWL()
 o=A.a([new A.Bh(s,A.w(t.Vk,t.Qd)),$.aSH()],t.tc)
-return A.aZW(new A.Cz(r,new A.Uw(p,n),o,A.aYy(n),"RustDesk",q,!1,n),m)}}
+return A.aZW(new A.Cz(r,new A.Uw(p,n),o,A.aYy(n),"Remote Control",q,!1,n),m)}}
 A.oh.prototype={}
 A.q0.prototype={
 gkd(){var s,r=this,q=r.b
@@ -88540,7 +88540,7 @@ if(s==null)return!1
 else return s!==a}}
 A.Uw.prototype={
 I(a){var s=null,r=this.c
-return A.Sl(A.aG9(r.e,!0,s,A.aq("RustDesk"+($.aEg?" (Beta) ":""),s,s,s,s,s,s,s)),B.c6,r,s,s,s,s)}}
+return A.Sl(A.aG9(r.e,!0,s,A.aq("Remote Control",s,s,s,s,s,s,s)),B.c6,r,s,s,s,s)}}
 A.rs.prototype={
 ac(){var s=null
 return new A.HU(!$.nb,A.lN(!0,s,!0,!0,s,s,!1),A.lN(!0,s,!0,!0,s,s,!1),new A.j(0,0),B.i)}}

@@ -48,8 +48,12 @@ export default class Connection {
 
   async start(id: string) {
     try {
+      // @ts-ignore
+      window.started = true;
       await this._start(id);
     } catch (e: any) {
+      // @ts-ignore
+      window.started = false;
       this.msgbox(
         "error",
         "Connection Error",
@@ -340,6 +344,10 @@ export default class Connection {
     clearInterval(this._interval);
     this._ws?.close();
     this._videoDecoder?.close();
+    // @ts-ignore
+    if (typeof window.onConnectionClosed === 'function') window.onConnectionClosed(this._id);
+    // @ts-ignore
+    window.started = false;
   }
 
   refresh() {
@@ -487,6 +495,8 @@ export default class Connection {
     } else {
       this.setOption("password", undefined);
     }
+    // @ts-ignore
+    if (typeof window.onConnected === 'function') window.onConnected(this._id);
   }
 
   shouldAutoLogin(): string {
@@ -753,22 +763,22 @@ function getDefaultUri(isRelay: Boolean = false): string {
   const host = localStorage.getItem("custom-rendezvous-server");
   return getrUriFromRs(host || HOST, isRelay);
 }
-/*
+
 function isHttps() {
   return window.location.protocol === "https:"
 }
 
 function domain(uri: string) {
     return uri.indexOf(":") > 0 ? uri.split(":")[0] : uri
-}*/
+}
 
 function getrUriFromRs(
   uri: string,
   isRelay: Boolean = false,
   roffset: number = 0
 ): string {
-    //v2
-  //if (isHttps()) return "wss://" + domain(uri) + "/ws/" + (isRelay ? "relay" : "id");
+  //v2
+  if (isHttps()) return "wss://" + domain(uri) + "/ws/" + (isRelay ? "relay" : "id");
   if (uri.indexOf(":") > 0) {
     const tmp = uri.split(":");
     const port = parseInt(tmp[1]);
